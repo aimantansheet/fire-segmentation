@@ -35,17 +35,7 @@ During training, the ResNet34 encoder was initialized with ImageNet-pretrained w
 
 ### Architecture
 
-> **Input Image**  
-> ↓  
-> **ResNet34 Encoder**  
-> ↓  
-> **U-Net Decoder**  
-> ↓  
-> **1-Channel Output**  
-> ↓  
-> **Sigmoid Activation**  
-> ↓  
-> **Binary Fire Mask**
+**Input Image → ResNet34 Encoder → U-Net Decoder → 1-Channel Output → Sigmoid Activation → Binary Fire Mask**
 
 ### Model Configuration
 
@@ -174,35 +164,21 @@ The trained model was deployed as a REST API using **FastAPI**.
 
 #### Health Check
 
-`GET /`
+**GET /**
 
-Response:
+Returns:
 
 `{"message": "Fire Segmentation API is running"}`
 
 #### Fire Segmentation
 
-`POST /predict`
+**POST /predict**
 
 The endpoint accepts an image file and returns the predicted binary segmentation mask as a PNG image.
 
 ### API Pipeline
 
-> **Image Upload**  
-> ↓  
-> **FastAPI**  
-> ↓  
-> **Image Preprocessing**  
-> ↓  
-> **U-Net Model**  
-> ↓  
-> **Sigmoid Activation**  
-> ↓  
-> **Threshold > 0.5**  
-> ↓  
-> **Binary Segmentation Mask**  
-> ↓  
-> **PNG Response**
+**Image Upload → FastAPI → Image Preprocessing → U-Net Model → Sigmoid Activation → Threshold > 0.5 → Binary Segmentation Mask → PNG Response**
 
 ---
 
@@ -212,7 +188,7 @@ The API was tested using **Postman** by sending an image file to the `/predict` 
 
 ### Example Request
 
-`POST /predict`
+**POST /predict**
 
 Content type: `multipart/form-data`
 
@@ -276,7 +252,7 @@ The checkpoint is approximately **93 MB**.
 
 Due to its size, the trained model weights are **not stored in this GitHub repository**.
 
-The trained checkpoint is maintained separately with the deployed Hugging Face Space.
+The trained checkpoint is maintained separately with the deployed Hugging Face application.
 
 ### Model Weight Availability
 
@@ -296,13 +272,73 @@ when running the API locally.
 
 ## 📁 Project Structure
 
-```text
-fire-segmentation/
-├── app.py
-├── model.py
-├── requirements.txt
-├── Dockerfile
-├── README.md
-├── .gitignore
-└── notebooks/
-    └── FireSegmentation.ipynb
+| File / Folder | Description |
+|---|---|
+| `app.py` | FastAPI application and prediction endpoint |
+| `model.py` | Model architecture, checkpoint loading, preprocessing, and inference |
+| `requirements.txt` | Python dependencies |
+| `Dockerfile` | Docker configuration for deployment |
+| `README.md` | Project documentation |
+| `.gitignore` | Git ignore configuration |
+| `notebooks/FireSegmentation.ipynb` | Complete model training notebook |
+
+---
+
+## 🛠️ Technologies Used
+
+- **Python**
+- **PyTorch**
+- **Segmentation Models PyTorch**
+- **OpenCV**
+- **NumPy**
+- **Albumentations**
+- **FastAPI**
+- **Uvicorn**
+- **Docker**
+- **Hugging Face Spaces**
+- **Postman**
+- **Kaggle Dataset**
+
+---
+
+## 🎯 Key Learning Outcomes
+
+This project demonstrates an end-to-end computer vision and machine learning workflow, including:
+
+- Image dataset preparation
+- Semantic segmentation
+- U-Net model development
+- Transfer learning using ResNet34
+- Image preprocessing and augmentation
+- Combined Dice + BCE loss
+- Model evaluation using IoU
+- PyTorch model inference
+- REST API development with FastAPI
+- Docker containerization
+- Cloud deployment
+- API testing with Postman
+
+---
+
+## 🔮 Future Improvements
+
+Potential improvements to the project include:
+
+- Training for more epochs
+- Hyperparameter tuning
+- Experimenting with different segmentation architectures
+- Evaluating additional metrics such as Dice Score and F1 Score
+- Adding fire-mask overlays to the API response
+- Adding confidence/probability visualization
+- Implementing automated model downloading for easier local setup
+- Adding automated testing and CI/CD
+
+---
+
+## 👤 Author
+
+**Aiman Tansheet**
+
+MS Data Science | Data Science & AI/ML
+
+GitHub: [aimantansheet](https://github.com/aimantansheet)
