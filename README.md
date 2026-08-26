@@ -35,22 +35,17 @@ During training, the ResNet34 encoder was initialized with ImageNet-pretrained w
 
 ### Architecture
 
-    Input Image
-         │
-         ▼
-    ResNet34 Encoder
-         │
-         ▼
-    U-Net Decoder
-         │
-         ▼
-    1-Channel Output
-         │
-         ▼
-    Sigmoid Activation
-         │
-         ▼
-    Binary Fire Mask
+> **Input Image**  
+> ↓  
+> **ResNet34 Encoder**  
+> ↓  
+> **U-Net Decoder**  
+> ↓  
+> **1-Channel Output**  
+> ↓  
+> **Sigmoid Activation**  
+> ↓  
+> **Binary Fire Mask**
 
 ### Model Configuration
 
@@ -91,9 +86,7 @@ using `train_test_split` with a fixed `random_state=42`.
 
 ## 🔄 Data Preprocessing & Augmentation
 
-All images and masks were resized to:
-
-    256 × 256
+All images and masks were resized to **256 × 256**.
 
 ### Training Augmentation
 
@@ -140,7 +133,7 @@ The model was trained for **10 epochs**.
 
 A combined segmentation loss was used:
 
-    Total Loss = Dice Loss + Binary Cross-Entropy Loss
+**Total Loss = Dice Loss + Binary Cross-Entropy Loss**
 
 Dice Loss helps optimize the overlap between predicted and ground-truth segmentation regions, while Binary Cross-Entropy provides pixel-level classification supervision.
 
@@ -181,37 +174,35 @@ The trained model was deployed as a REST API using **FastAPI**.
 
 #### Health Check
 
-    GET /
+`GET /`
 
 Response:
 
-    {
-      "message": "Fire Segmentation API is running"
-    }
+`{"message": "Fire Segmentation API is running"}`
 
 #### Fire Segmentation
 
-    POST /predict
+`POST /predict`
 
 The endpoint accepts an image file and returns the predicted binary segmentation mask as a PNG image.
 
 ### API Pipeline
 
-    Image Upload
-         ↓
-    FastAPI
-         ↓
-    Image Preprocessing
-         ↓
-    U-Net Model
-         ↓
-    Sigmoid Activation
-         ↓
-    Threshold > 0.5
-         ↓
-    Binary Segmentation Mask
-         ↓
-    PNG Response
+> **Image Upload**  
+> ↓  
+> **FastAPI**  
+> ↓  
+> **Image Preprocessing**  
+> ↓  
+> **U-Net Model**  
+> ↓  
+> **Sigmoid Activation**  
+> ↓  
+> **Threshold > 0.5**  
+> ↓  
+> **Binary Segmentation Mask**  
+> ↓  
+> **PNG Response**
 
 ---
 
@@ -221,12 +212,13 @@ The API was tested using **Postman** by sending an image file to the `/predict` 
 
 ### Example Request
 
-    POST /predict
-    Content-Type: multipart/form-data
+`POST /predict`
 
-Form-data:
+Content type: `multipart/form-data`
 
-    file → image file
+Form-data field:
+
+`file` → image file
 
 The API returns the predicted segmentation mask in PNG format.
 
@@ -246,19 +238,19 @@ The Docker image:
 
 ### Build the Docker Image
 
-    docker build -t fire-segmentation-api .
+`docker build -t fire-segmentation-api .`
 
 ### Run the Container
 
-    docker run -p 7860:7860 fire-segmentation-api
+`docker run -p 7860:7860 fire-segmentation-api`
 
 The API can then be accessed at:
 
-    http://localhost:7860
+`http://localhost:7860`
 
 FastAPI interactive documentation:
 
-    http://localhost:7860/docs
+`http://localhost:7860/docs`
 
 ---
 
@@ -278,9 +270,9 @@ The deployed application provides an API endpoint for performing fire segmentati
 
 The trained model checkpoint is:
 
-    best_unet_fire.pth
+`best_unet_fire.pth`
 
-The checkpoint is approximately **98 MB**.
+The checkpoint is approximately **93 MB**.
 
 Due to its size, the trained model weights are **not stored in this GitHub repository**.
 
@@ -288,13 +280,13 @@ The trained checkpoint is maintained separately with the deployed Hugging Face S
 
 ### Model Weight Availability
 
-The trained model checkpoint is available as part of the deployed Hugging Face application.
+The trained model checkpoint is available with the deployed Hugging Face application.
 
-👉 **[Access the Hugging Face Space](https://huggingface.co/spaces/aiman72366/Fire_Segmentation_API)**
+🔥 **[Access the Hugging Face Space](https://huggingface.co/spaces/aiman72366/Fire_Segmentation_API)**
 
 The inference code in `model.py` expects the checkpoint to be available as:
 
-    best_unet_fire.pth
+`best_unet_fire.pth`
 
 when running the API locally.
 
@@ -304,75 +296,13 @@ when running the API locally.
 
 ## 📁 Project Structure
 
-    fire-segmentation/
-    │
-    ├── app.py
-    ├── model.py
-    ├── requirements.txt
-    ├── Dockerfile
-    ├── README.md
-    ├── .gitignore
-    │
-    └── notebooks/
-        └── FireSegmentation.ipynb
-
----
-
-## 🛠️ Technologies Used
-
-- **Python**
-- **PyTorch**
-- **Segmentation Models PyTorch**
-- **OpenCV**
-- **NumPy**
-- **Albumentations**
-- **FastAPI**
-- **Uvicorn**
-- **Docker**
-- **Hugging Face Spaces**
-- **Postman**
-- **Kaggle Dataset**
-
----
-
-## 🎯 Key Learning Outcomes
-
-This project demonstrates an end-to-end computer vision and machine learning workflow, including:
-
-- Image dataset preparation
-- Semantic segmentation
-- U-Net model development
-- Transfer learning using ResNet34
-- Image preprocessing and augmentation
-- Combined Dice + BCE loss
-- Model evaluation using IoU
-- PyTorch model inference
-- REST API development with FastAPI
-- Docker containerization
-- Cloud deployment
-- API testing with Postman
-
----
-
-## 🔮 Future Improvements
-
-Potential improvements to the project include:
-
-- Training for more epochs
-- Hyperparameter tuning
-- Experimenting with different segmentation architectures
-- Evaluating additional metrics such as Dice Score and F1 Score
-- Adding fire-mask overlays to the API response
-- Adding confidence/probability visualization
-- Implementing automated model downloading for easier local setup
-- Adding automated testing and CI/CD
-
----
-
-## 👤 Author
-
-**Aiman Tansheet**
-
-MS Data Science | Data Science & AI/ML
-
-GitHub: [aimantansheet](https://github.com/aimantansheet)
+```text
+fire-segmentation/
+├── app.py
+├── model.py
+├── requirements.txt
+├── Dockerfile
+├── README.md
+├── .gitignore
+└── notebooks/
+    └── FireSegmentation.ipynb
